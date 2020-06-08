@@ -52,6 +52,7 @@ while True:
 	data = client.recv(1024) #接收一个信息，并指定接收的大小 为1024字节
 	print('recv:',data) #输出我接收的信息
 	print('##############################################################')
+	time.sleep(0.2)
 	# except:
 	# 	client.close()
 	# 	client = socket.socket(socket.AF_INET,socket.SOCK_STREAM) #声明socket类型，同时生成链接对象
