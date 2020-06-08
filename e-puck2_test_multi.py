@@ -50,7 +50,7 @@ while True:
 	# try:
 	get_data = client.send(str.encode("epuck"))
 	data = client.recv(1024) #接收一个信息，并指定接收的大小 为1024字节
-	print('recv:',data.decode()) #输出我接收的信息
+	print('recv:',data) #输出我接收的信息
 	print('##############################################################')
 	# except:
 	# 	client.close()
