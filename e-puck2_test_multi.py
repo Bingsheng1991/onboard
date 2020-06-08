@@ -81,3 +81,18 @@ while True:
 
 client.close() #关闭这个链接
 
+counter += 1
+if (counter == 20):
+	counter = 0
+	actuators_data[0] = 0  # Left speed: 512
+	actuators_data[1] = 0
+	actuators_data[2] = 0  # Right speed: -512
+	actuators_data[3] = 0
+
+checksum = 0
+for i in range(ACTUATORS_SIZE - 1):
+	checksum ^= actuators_data[i]
+actuators_data[ACTUATORS_SIZE - 1] = checksum
+
+update_robot_sensors_and_actuators()
+
