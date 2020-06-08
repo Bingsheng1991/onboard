@@ -47,20 +47,20 @@ while True:
 	# data = client.recv(1024) #接收一个信息，并指定接收的大小 为1024字节
 	# print('recv:',data) #输出我接收的信息
 	# print('##############################################################')
-	try:
-		get_data = client.send(str.encode("epuck"))
-		data = client.recv(1024) #接收一个信息，并指定接收的大小 为1024字节
-		print('recv:',data.decode()) #输出我接收的信息
-		print('##############################################################')
-	except:
-		client.close()
-		client = socket.socket(socket.AF_INET,socket.SOCK_STREAM) #声明socket类型，同时生成链接对象
-		client.connect((Host,Port)) #connet to server
-		client.send("E-Pcuk 4786 reconnect".encode('utf8'))
+	# try:
+	get_data = client.send(str.encode("epuck"))
+	data = client.recv(1024) #接收一个信息，并指定接收的大小 为1024字节
+	print('recv:',data.decode()) #输出我接收的信息
+	print('##############################################################')
+	# except:
+	# 	client.close()
+	# 	client = socket.socket(socket.AF_INET,socket.SOCK_STREAM) #声明socket类型，同时生成链接对象
+	# 	client.connect((Host,Port)) #connet to server
+	# 	client.send("E-Pcuk 4786 reconnect".encode('utf8'))
 
 ######################################################################################
 
-	start = time.time()
+	# start = time.time()
 
 	counter += 1
 	if(counter == 20):
