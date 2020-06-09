@@ -58,7 +58,7 @@ while True:
 	elif data_decode == 'stop':
 		movement = bytearray([0, 0, 0, 0])
 
-	print('movement:',data) #输出我接收的信息
+	print('movement:',data_decode) #输出我接收的信息
 	time.sleep(0.5)
 	# except:
 	# 	client.close()
@@ -73,16 +73,16 @@ while True:
 	counter += 1
 	if(counter == 20):
 		counter = 0
-		actuators_data[0] = data[0]		# Left speed: 512
-		actuators_data[1] = data[1]
-		actuators_data[2] = data[2]		# Right speed: -512
-		actuators_data[3] = data[3]
+		actuators_data[0] = movement[0]		# Left speed: 512
+		actuators_data[1] = movement[1]
+		actuators_data[2] = movement[2]		# Right speed: -512
+		actuators_data[3] = movement[3]
 
 
-	checksum = 0
-	for i in range(ACTUATORS_SIZE-1):
-		checksum ^= actuators_data[i]
-	actuators_data[ACTUATORS_SIZE-1] = checksum
+	# checksum = 0
+	# for i in range(ACTUATORS_SIZE-1):
+	# 	checksum ^= actuators_data[i]
+	# actuators_data[ACTUATORS_SIZE-1] = checksum
 
 	update_robot_sensors_and_actuators()
 
