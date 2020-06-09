@@ -50,7 +50,15 @@ while True:
 	# try:
 	get_data = client.send(str.encode("epuck"))
 	data = client.recv(1024) #接收一个信息，并指定接收的大小 为1024字节
-	print('recv:',data) #输出我接收的信息
+	data_decode = str(data, encoding="utf-8")
+	if data_decode == 'spin':
+		movement = bytearray([0, 2, 0, 0xFE])
+	elif data_decode == 'move_forward':
+		movement = bytearray([0, 2, 0, 2])
+	elif data_decode == 'stop':
+		movement = bytearray([0, 0, 0, 0])
+
+	print('movement:',data) #输出我接收的信息
 	print('##############################################################')
 	time.sleep(0.5)
 	# except:
@@ -80,19 +88,3 @@ while True:
 	update_robot_sensors_and_actuators()
 
 client.close() #关闭这个链接
-
-# counter += 1
-# if (counter == 20):
-# 	counter = 0
-actuators_data[0] = 0  # Left speed: 512
-actuators_data[1] = 0
-actuators_data[2] = 0  # Right speed: -512
-actuators_data[3] = 0
-
-# checksum = 0
-# for i in range(ACTUATORS_SIZE - 1):
-# 	checksum ^= actuators_data[i]
-# actuators_data[ACTUATORS_SIZE - 1] = checksum
-
-update_robot_sensors_and_actuators()
-
