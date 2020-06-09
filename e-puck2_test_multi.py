@@ -59,7 +59,6 @@ while True:
 		movement = bytearray([0, 0, 0, 0])
 
 	print('movement:',data) #输出我接收的信息
-	print('##############################################################')
 	time.sleep(0.5)
 	# except:
 	# 	client.close()
