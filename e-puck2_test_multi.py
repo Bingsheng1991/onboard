@@ -79,10 +79,10 @@ while True:
 		actuators_data[3] = movement[3]
 
 
-	# checksum = 0
-	# for i in range(ACTUATORS_SIZE-1):
-	# 	checksum ^= actuators_data[i]
-	# actuators_data[ACTUATORS_SIZE-1] = checksum
+	checksum = 0
+	for i in range(ACTUATORS_SIZE-1):
+		checksum ^= actuators_data[i]
+	actuators_data[ACTUATORS_SIZE-1] = checksum
 
 	update_robot_sensors_and_actuators()
 
