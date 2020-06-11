@@ -53,11 +53,11 @@ while True:
 	data = client.recv(1024) #接收一个信息，并指定接收的大小 为1024字节
 	data_decode = str(data, encoding="utf-8")
 	if data_decode == 'spin':
-		movement = [0, 2, 0, 0xFE]
+		movement = bytearray([0, 2, 0, 0xFE])
 	elif data_decode == 'move_forward':
-		movement = [0, 2, 0, 2]
+		movement = bytearray([0, 2, 0, 2])
 	elif data_decode == 'stop':
-		movement = [0, 0, 0, 0]
+		movement = bytearray([0, 0, 0, 0])
 
 	print('movement:',data_decode) #输出我接收的信息
 #	time.sleep(0.5)
