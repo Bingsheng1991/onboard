@@ -27,7 +27,7 @@ Host = '192.168.1.123' #server addr
 Port = 8888 #e-puck id
 client = socket.socket(socket.AF_INET,socket.SOCK_STREAM) #声明socket类型，同时生成链接对象
 client.connect((Host,Port)) #connet to server
-client.send("4514".encode('utf8'))
+client.send("0".encode('utf8'))
 
 actuators_data = bytearray([0] * ACTUATORS_SIZE)
 sensors_data = bytearray([0] * SENSORS_SIZE)
@@ -59,7 +59,7 @@ while True:
 		movement = bytearray([0, 0, 0, 0])
 
 	print('movement:',data_decode) #输出我接收的信息
-	time.sleep(0.5)
+#	time.sleep(0.5)
 	# except:
 	# 	client.close()
 	# 	client = socket.socket(socket.AF_INET,socket.SOCK_STREAM) #声明socket类型，同时生成链接对象
@@ -70,13 +70,11 @@ while True:
 
 	# start = time.time()
 
-	counter += 1
-	if(counter == 20):
-		counter = 0
-		actuators_data[0] = movement[0]		# Left speed: 512
-		actuators_data[1] = movement[1]
-		actuators_data[2] = movement[2]		# Right speed: -512
-		actuators_data[3] = movement[3]
+#	counter = 0
+	actuators_data[0] = 0		# Left speed: 512
+	actuators_data[1] = 2
+	actuators_data[2] = 0		# Right speed: -512
+	actuators_data[3] = 0xFE
 
 
 	checksum = 0
@@ -85,5 +83,5 @@ while True:
 	actuators_data[ACTUATORS_SIZE-1] = checksum
 
 	update_robot_sensors_and_actuators()
-
+	time.sleep(0.5)
 client.close() #关闭这个链接
