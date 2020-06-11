@@ -9,6 +9,7 @@ I2C_CHANNEL = 4
 ROB_ADDR = 0x1F
 ACTUATORS_SIZE = (19 + 1)  # Data + checksum.
 SENSORS_SIZE = (46 + 1)  # Data + checksum.
+movement = [0,0,0,0]
 
 def update_robot_sensors_and_actuators():
 	global sensors_data
@@ -52,11 +53,11 @@ while True:
 	data = client.recv(1024) #接收一个信息，并指定接收的大小 为1024字节
 	data_decode = str(data, encoding="utf-8")
 	if data_decode == 'spin':
-		movement = bytearray([0, 2, 0, 0xFE])
+		movement = [0, 2, 0, 0xFE]
 	elif data_decode == 'move_forward':
-		movement = bytearray([0, 2, 0, 2])
+		movement = [0, 2, 0, 2]
 	elif data_decode == 'stop':
-		movement = bytearray([0, 0, 0, 0])
+		movement = [0, 0, 0, 0]
 
 	print('movement:',data_decode) #输出我接收的信息
 #	time.sleep(0.5)
@@ -71,17 +72,17 @@ while True:
 	# start = time.time()
 
 #	counter = 0
-	actuators_data[0] = 0		# Left speed: 512
-	actuators_data[1] = 2
-	actuators_data[2] = 0		# Right speed: -512
-	actuators_data[3] = 0xFE
+	actuators_data[0] = movement[0]		# Left speed: 512
+	actuators_data[1] = movement[1]
+	actuators_data[2] = movement[2]		# Right speed: -512
+	actuators_data[3] = movement[3]
 
 
-	checksum = 0
-	for i in range(ACTUATORS_SIZE-1):
-		checksum ^= actuators_data[i]
-	actuators_data[ACTUATORS_SIZE-1] = checksum
+	# checksum = 0
+	# for i in range(ACTUATORS_SIZE-1):
+	# 	checksum ^= actuators_data[i]
+	# actuators_data[ACTUATORS_SIZE-1] = checksum
 
 	update_robot_sensors_and_actuators()
-	time.sleep(0.5)
+	time.sleep(0.1)
 client.close() #关闭这个链接
