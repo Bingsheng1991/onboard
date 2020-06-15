@@ -52,10 +52,12 @@ while True:
 	get_data = client.send(str.encode("epuck"))
 	data = client.recv(1024) #接收一个信息，并指定接收的大小 为1024字节
 	data_decode = str(data, encoding="utf-8")
-	if data_decode == 'spin':
+	if data_decode == 'spin_right':
 		movement = bytearray([0, 1, 0, 0xFF])
+	elif data_decode == 'spin_left':
+		movement = bytearray([0, 0xFE, 0, 1])
 	elif data_decode == 'move_forward':
-		movement = bytearray([0, 2, 0, 2])
+		movement = bytearray([0, 1, 0, 1])
 	elif data_decode == 'stop':
 		movement = bytearray([0, 0, 0, 0])
 
