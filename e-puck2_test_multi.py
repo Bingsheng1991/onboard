@@ -58,6 +58,8 @@ while True:
 		movement = bytearray([0xE0, 0xFF, 0x20, 0x00])
 	elif data_decode == 'move_forward':
 		movement = bytearray([0x20, 0x00,0x20, 0x00])
+	elif data_decode == 'move_backward':
+		movement = bytearray([0xE0, 0xFF, 0xE0, 0xFF])
 	elif data_decode == 'stop':
 		movement = bytearray([0, 0, 0, 0])
 
