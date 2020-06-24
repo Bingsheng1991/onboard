@@ -20,7 +20,8 @@ def update_robot_sensors_and_actuators():
 		bus.i2c_rdwr(write, read)
 		sensors_data = list(read)
 	except:
-		sys.exit(1)
+		# sys.exit(1)
+		SMBus(I2C_CHANNEL)
 
 ##############################socket client###########################################
 import socket# 客户端 发送一个数据，再接收一个数据
@@ -53,29 +54,22 @@ while True:
 	data = client.recv(1024) #接收一个信息，并指定接收的大小 为1024字节
 	data_decode = str(data, encoding="utf-8")
 	if data_decode == 'spin_right':
-		movement = bytearray([0x20, 0x00, 0xE0, 0xFF])
+		movement = bytearray([0x40, 0x00, 0xC0, 0xFF]) #64
+		#movement = bytearray([0x20, 0x00, 0xE0, 0xFF]) #32
 	elif data_decode == 'spin_left':
-		movement = bytearray([0xE0, 0xFF, 0x20, 0x00])
+		movement = bytearray([0xC0, 0xFF, 0x40, 0x00])
+		#movement = bytearray([0xE0, 0xFF, 0x20, 0x00])
 	elif data_decode == 'move_forward':
-		movement = bytearray([0x20, 0x00,0x20, 0x00])
+		movement = bytearray([0x40, 0x00, 0x40, 0x00])
+		#movement = bytearray([0x20, 0x00,0x20, 0x00])
 	elif data_decode == 'move_backward':
-		movement = bytearray([0xE0, 0xFF, 0xE0, 0xFF])
+		movement = bytearray([0xC0, 0xFF, 0xC0, 0xFF])
+		#movement = bytearray([0xE0, 0xFF, 0xE0, 0xFF])
 	elif data_decode == 'stop':
 		movement = bytearray([0, 0, 0, 0])
 
 	print('movement:',data_decode) #输出我接收的信息
-#	time.sleep(0.5)
-	# except:
-	# 	client.close()
-	# 	client = socket.socket(socket.AF_INET,socket.SOCK_STREAM) #声明socket类型，同时生成链接对象
-	# 	client.connect((Host,Port)) #connet to server
-	# 	client.send("E-Pcuk 4786 reconnect".encode('utf8'))
 
-######################################################################################
-
-	# start = time.time()
-
-#	counter = 0
 	actuators_data[0] = movement[0]		# Left speed: 512
 	actuators_data[1] = movement[1]
 	actuators_data[2] = movement[2]		# Right speed: -512
@@ -88,5 +82,5 @@ while True:
 	actuators_data[ACTUATORS_SIZE-1] = checksum
 
 	update_robot_sensors_and_actuators()
-	time.sleep(0.1)
+	time.sleep(0.2)
 client.close() #关闭这个链接
